@@ -3,7 +3,7 @@ from requests.auth import HTTPBasicAuth
 from config import WORKSPACE, PASSWORD, USERNAME, TOKEN
 
 class BitbucketClient:
-    def __init__(self, base_url="https://api.bitbucket.org/2.0", token=None):
+    def __init__(self, base_url="https://api.bitbucket.org/2.0"):
         self.base_url = base_url
         self.session = requests.Session()
 
@@ -47,7 +47,7 @@ class BitbucketClient:
         response = self.session.put(url, json=payload)
         response.raise_for_status()
         return "Done"
-    
+
     def remove_user(self, user_id, repo_name):
         """Remove user permission to a repo"""
         url = f"{self.base_url}/repositories/{WORKSPACE}/{repo_name}/permissions-config/users/{user_id}"

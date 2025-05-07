@@ -1,11 +1,11 @@
+from enum import Enum
 import typer
 from client import BitbucketClient
-from enum import Enum
 
 class PermissionLevel(str, Enum):
-    read = "read"
-    write = "write"
-    admin = "admin"
+    READ = "read"
+    WRITE = "write"
+    ADMIN = "admin"
 
 app = typer.Typer(help="CLI to interact with bitbucket api.")
 
