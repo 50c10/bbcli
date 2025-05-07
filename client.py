@@ -1,15 +1,17 @@
 import requests
-from config import WORKSPACE
+from requests.auth import HTTPBasicAuth
+from config import WORKSPACE, PASSWORD, USERNAME, TOKEN
 
 class BitbucketClient:
     def __init__(self, base_url="https://api.bitbucket.org/2.0", token=None):
         self.base_url = base_url
         self.session = requests.Session()
-        
-        if token:
-            self.session.headers.update({"Authorization": f"Bearer {token}"})
+
+    def set_credentials(self, use_password=None):
+        if use_password:
+            self.session.auth=HTTPBasicAuth(USERNAME, PASSWORD)
         else:
-            raise ValueError("You need a valid token to autenticate.")
+            self.session.headers.update({"Authorization": f"Bearer {TOKEN}"})
 
     def create_project(self, project_name, description, project_key):
         """Create a project."""
@@ -21,7 +23,7 @@ class BitbucketClient:
             }
         response = self.session.post(url, json=payload)
         response.raise_for_status()
-        return response.json()
+        return "Done"
 
 
     def create_repository(self, project, repo_name, is_private=True):
@@ -33,4 +35,22 @@ class BitbucketClient:
             }
         response = self.session.post(url, json=payload)
         response.raise_for_status()
-        return response.json()
+        return "Done"
+
+    def add_user(self, user_id, repo_name, permission):
+        """Add user permission to a repo"""
+        url = f"{self.base_url}/repositories/{WORKSPACE}/{repo_name}/permissions-config/users/{user_id}"
+        payload = {
+            "permission": permission.value
+        }
+        print(self.session.headers)
+        response = self.session.put(url, json=payload)
+        response.raise_for_status()
+        return "Done"
+    
+    def remove_user(self, user_id, repo_name):
+        """Remove user permission to a repo"""
+        url = f"{self.base_url}/repositories/{WORKSPACE}/{repo_name}/permissions-config/users/{user_id}"
+        response = self.session.delete(url)
+        response.raise_for_status()
+        return "Done"
