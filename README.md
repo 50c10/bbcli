@@ -19,6 +19,8 @@ pip install -r requirements.txt
 ```bash
 export BITBUCKET_TOKEN="access token"
 export BITBUCKET_WORKSPACE="workspace"
+export BITBUCKET_USERNAME="username"
+export BITBUCKET_PASSWORD="password"
 ```
 
 ### Run the script
