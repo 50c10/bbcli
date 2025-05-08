@@ -49,3 +49,13 @@ def remove_user(user_id: str, repo_name: str):
     typer.echo(f"Removing user '{user_id}' from: {repo_name}")
     response = client.remove_user(user_id,repo_name)
     print(response)
+
+@app.command()
+def permissions(user_id: str, repo_name: str):
+    """
+    This function add permission to push without a PR
+    """
+    client.set_credentials(use_password=True)
+    typer.echo(f"Adding permissions to '{user_id}' on: {repo_name}")
+    response = client.update_permissions(user_id,repo_name)
+    print(response)

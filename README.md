@@ -23,9 +23,12 @@ export BITBUCKET_USERNAME="username"
 export BITBUCKET_PASSWORD="password"
 ```
 
+Note:
+the bitbucket password is created following the next doc https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/
+
 ### Run the script
 
-to use the tool just need to execute the next comand. the cli can show the options 
+to use the tool just need to execute the next command. the cli will show all the options available
 
 ```bash
 main.py --help

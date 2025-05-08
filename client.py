@@ -54,3 +54,16 @@ class BitbucketClient:
         response = self.session.delete(url)
         response.raise_for_status()
         return "Done"
+
+    def update_permissions(self, user_id, repo_name):
+        """This function add permission to push without a PR"""
+        url = f"{self.base_url}/repositories/{WORKSPACE}/{repo_name}/branch-restrictions"
+        payload = {
+            "kind": "push",
+            "branch_match_kind": "glob",
+            "pattern": "master",
+            "users": [{"type": "user", "username": user_id}],
+        }
+        response = self.session.post(url,json=payload)
+        response.raise_for_status()
+        return response.json
